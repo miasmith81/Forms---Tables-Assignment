@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Check minimum message length
         if (data.message.length < 5) {
-            showResponse('Message must be at least 10 characters long.', 'error');
+            showResponse('Message must be at least 5 characters long.', 'error');
             return false;
         }
 
