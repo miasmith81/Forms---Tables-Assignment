@@ -1,4 +1,5 @@
-Forms & Tables
+# Forms & Tables
+
 Recommended Time: ~2.5 hours
 
 Phase: HTML – Building Web Foundations
@@ -29,4 +30,4 @@ Reflection
 Ask ChatGPT:
 
 Can you suggest two accessibility improvements for my form (e.g., labels, required fields, ARIA attributes) and explain why they matter?
-Apply the suggested improvements and note them in your submission.
+Apply the suggested improvements and note them in your submission
