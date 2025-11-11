@@ -28,25 +28,66 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Validation function
     function validateForm(data) {
-        // Check if all fields have values
-        if (!data.name || !data.email || !data.message) {
-            return false;
+        let isValid = true;
+
+        // Clear previous errors
+        clearErrors();
+
+        // Validate name
+        if (!data.name) {
+            showError('user_name', 'Name is required.');
+            isValid = false;
         }
 
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(data.email)) {
-            showResponse('Please enter a valid email address (e.g., name@example.com).', 'error');
-            return false;
+        // Validate email
+        if (!data.email) {
+            showError('user_email', 'Email is required.');
+            isValid = false;
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showError('user_email', 'Please enter a valid email address (e.g., name@example.com).');
+                isValid = false;
+            }
         }
 
-        // Check minimum message length
-        if (data.message.length < 5) {
-            showResponse('Message must be at least 5 characters long.', 'error');
-            return false;
+        // Validate message
+        if (!data.message) {
+            showError('user_message', 'Message is required.');
+            isValid = false;
+        } else if (data.message.length < 5) {
+            showError('user_message', 'Message must be at least 5 characters long.');
+            isValid = false;
         }
 
-        return true;
+        return isValid;
+    }
+
+    // Show error message for a specific field
+    function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorSpan = document.getElementById(fieldId.replace('user_', '') + '-error');
+        
+        // Update ARIA attributes
+        field.setAttribute('aria-invalid', 'true');
+        
+        // Display error message
+        errorSpan.textContent = message;
+        errorSpan.classList.add('show');
+    }
+
+    // Clear all error messages
+    function clearErrors() {
+        const errorMessages = document.querySelectorAll('.error-message');
+        errorMessages.forEach(error => {
+            error.textContent = '';
+            error.classList.remove('show');
+        });
+
+        const fields = form.querySelectorAll('input, textarea');
+        fields.forEach(field => {
+            field.setAttribute('aria-invalid', 'false');
+        });
     }
 
     // Process form data
